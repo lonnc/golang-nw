@@ -10,7 +10,10 @@ Please note that this is fairly ugly code that I've used to test golang & node-w
 
 However, it may provide a starting point for others to improve on.
 
-# Build your app
+Build your app
+--------------
 go build -o myapp.exe main.go
-# Create your nw zip file and run it with node-webkit
+
+Create your nw zip file and run it with node-webkit
+--------------
 go run build.go && nw.exe myapp.nw
