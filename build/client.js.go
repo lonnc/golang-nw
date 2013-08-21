@@ -1,9 +1,12 @@
+package build
+
+const client = `
 exports.createClient = function() {
     var events = require('events');
     var channel = new events.EventEmitter();
 
     var path = require('path');
-    var exe = path.join(path.dirname(process.cwd), 'myapp.exe');
+    var exe = path.join(path.dirname(process.cwd), '{{ .Bin }}');
     console.log('Using client: ' + exe);
 
     // Now start the client process
@@ -53,3 +56,4 @@ exports.createClient = function() {
 
     return channel;
 };
+`

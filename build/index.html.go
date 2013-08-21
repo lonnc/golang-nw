@@ -1,7 +1,10 @@
+package build
+
+const index = `
 <!DOCTYPE html>
 <html>
 <head>
-<title>MyApp</title>
+<title>{{ .Name }}</title>
 <style>
 * {
   margin: 0;
@@ -19,3 +22,4 @@ html, body {
   <script src="script.js"></script>
 </body>
 </html>
+`

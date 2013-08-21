@@ -1,3 +1,6 @@
+package build
+
+const script = `
 var gui = require('nw.gui');
 var win = gui.Window.get();
 
@@ -66,3 +69,4 @@ win.on('close', function() {
     localStorage.height = win.height;
     this.close(true);
 });
+`
