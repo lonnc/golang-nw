@@ -23,3 +23,7 @@ Create your nw zip file and run it with node-webkit
 --------------
 .\bin\golang-nw-build -app=.\bin\example.exe -name="My Application" -out="myapp.nw"
 nw.exe myapp.nw
+
+
+You will probably want to create you own build script based on github.com/lonnc/golang-nw/cmd/golang-nw-build/build.go
+so you can control toolbar visibility, window dimensions etc.
