@@ -10,26 +10,6 @@ win.on('loaded', function() {
         win.resizeTo(parseInt(localStorage.width), parseInt(localStorage.height));
         win.moveTo(parseInt(localStorage.x), parseInt(localStorage.y));
     }
-
-	// Add a basic menu
-	var menu = new gui.Menu({
-        type: 'menubar'
-    });
-	
-	var helpMenu = new gui.Menu();
-    helpMenu.append(new gui.MenuItem({
-        label: 'Show Dev Tools',
-        click: function() {
-            win.showDevTools();
-        }
-    }));
-    
-    menu.append(new gui.MenuItem({
-        label: 'Help',
-        submenu: helpMenu
-    }));
-
-    win.menu = menu;
 	
     // Ensure we are visible
     win.show();
