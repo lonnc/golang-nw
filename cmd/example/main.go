@@ -1,34 +1,29 @@
 package main
 
 import (
-	"flag"
 	"fmt"
-	"log"
-	"net"
+	"github.com/lonnc/golang-nw"
 	"net/http"
-	"os"
-)
-
-var (
-	httpAddr = "localhost:8080"
 )
 
 func main() {
-	flag.StringVar(&httpAddr, "http", httpAddr, "HTTP service address (e.g., 'localhost:8080')")
-	flag.Parse()
+	// Setup our handler
+	http.HandleFunc("/", hello)
 
-	l := log.New(os.Stdout, "", log.Flags())
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello from golang.")
-	})
-
-	if ln, err := net.Listen("tcp", httpAddr); err != nil {
-		l.Fatalf("Failed to start listener on %s: %s", httpAddr, err)
-	} else {
-		l.Printf("HTTP listening on %s", ln.Addr().String())
-		if err := http.Serve(ln, nil); err != nil {
-			l.Fatalf("Failed to server http: %s", err)
-		}
+	// Create a link back to node-webkit using the environment variable
+	// populated by golang-nw's node-webkit code
+	nodeWebkit, err := nw.New()
+	if err != nil {
+		panic(err)
 	}
+
+	// Pick a random localhost port, start listening for http requests
+	// and send a message address back to node-webkit to redirect
+	if err := nodeWebkit.ListenAndServe(nil); err != nil {
+		panic(err)
+	}
+}
+
+func hello(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello from golang.")
 }

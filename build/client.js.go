@@ -1,10 +1,49 @@
 package build
 
 const client = `
+"use strict";
+
 exports.createClient = function() {
     var events = require('events');
     var channel = new events.EventEmitter();
+	var http = require('http');
+    var server = http.createServer(function (request, response) {
+	  if (request.method!='POST') {
+	    response.writeHead(404);
+        response.end('');
+		return;
+	  }
+		
+	  var body = '';
+	  request.on('data', function(chunk) { body += chunk.toString(); });
+	  request.on('end', function() {
+		switch (request.url) {
+		case '/redirect': 
+		  channel.emit('redirect', body);
+		  response.writeHead(204);
+		  response.end('');
+		  break;
+		case '/error': 
+		  channel.emit('error', body);
+		  response.writeHead(204);
+		  response.end('');
+		  break;
+		default:
+		  response.writeHead(404);
+		  response.end('');
+		 };
+	  });
+    });
 
+    server.listen(0, '127.0.0.1', 1, function() {
+	    console.log('Listening for golang-nw on http://127.0.0.1:'+server.address().port);
+		startClient(channel, 'http://127.0.0.1:'+server.address().port);
+	});
+	
+	return channel;
+};
+	
+function startClient(channel, nodeWebkitAddr) {
     var path = require('path');
     var exe = path.join(path.dirname(process.cwd), '{{ .Bin }}');
     console.log('Using client: ' + exe);
@@ -12,24 +51,9 @@ exports.createClient = function() {
     // Now start the client process
     var childProcess = require('child_process');
 
-    var p = childProcess.spawn(exe, ['-http=localhost:0']);
-
-    p.stdout.once('data', function(data) {
-        channel.emit('starting', exe);
-    });
-
-    p.stdout.on('data', function(data) {
-        var s = data.toString();
-        console.log(s);
-
-        // Check to see if we are listening now
-        var listening = /HTTP listening on (\S+)/.exec(s);
-        if (listening) {
-            var url = 'http://' + listening[1] + '/';
-            console.log('Detected that client has started on: ' + url);
-            channel.emit('listening', url);
-        }
-    });
+	var env = process.env;
+	env['GOLANG-NW'] = nodeWebkitAddr;
+    var p = childProcess.spawn(exe, [], {env: env});
 
     p.stderr.on('data', function(data) {
         console.error(data.toString());
@@ -53,7 +77,5 @@ exports.createClient = function() {
     channel.kill = function() {
         p.kill();
     }
-
-    return channel;
 };
 `

@@ -1,6 +1,8 @@
 package build
 
 const script = `
+"use strict";
+
 var gui = require('nw.gui');
 var win = gui.Window.get();
 
@@ -25,13 +27,9 @@ win.on('loaded', function() {
     var clientProcess = client.createClient();
     clientProcess.
     on('error', function(err) {
-        msg('Failed to start client: ' + err);
+        msg('Error: ' + err);
     }).
-    once('starting', function(bin) {
-        msg('Starting client: ' + bin);
-    }).
-    once('listening', function(url) {
-        msg('Started');
+    on('redirect', function(url) {
         window.location.href = url;
     });
     
