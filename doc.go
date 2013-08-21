@@ -36,7 +36,7 @@ See https://github.com/lonnc/golang-nw/blob/master/cmd/example/main.go
 		}
 
 		// Pick a random localhost port, start listening for http requests
-		// and send a message address back to node-webkit to redirect
+		// and send a message back to node-webkit to redirect
 		if err := nodeWebkit.ListenAndServe(nil); err != nil {
 			panic(err)
 		}
@@ -62,8 +62,9 @@ Finally execute node-webkit with the myapp.nw generated above as a parameter:
     nw.exe myapp.nw
 
 
-You will probably want to create your own build script based on 
+You will probably want to create your own build script so you can control toolbar visibility,
+window dimensions etc.
+See http://godoc.org/github.com/lonnc/golang-nw/build and
 https://github.com/lonnc/golang-nw/blob/master/cmd/golang-nw-build/build.go
-so you can control toolbar visibility, window dimensions etc.
 */
 package nw
