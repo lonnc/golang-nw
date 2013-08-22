@@ -20,9 +20,15 @@ func main() {
 	flag.StringVar(&out, "out", out, "Destination file for generated node-webkit .nw file.")
 	flag.Parse()
 
+	if err := nwBuild(); err != nil {
+		panic(err)
+	}
+}
+
+func nwBuild() error {
 	w, err := os.Create(out)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	defer w.Close()
 
@@ -31,7 +37,7 @@ func main() {
 
 	r, err := os.Open(app)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	defer r.Close()
 
@@ -39,6 +45,8 @@ func main() {
 	p := build.Package{Name: name, Bin: bin, Window: build.Window{Title: name}}
 
 	if err := p.CreateNW(zw, build.DefaultTemplates, r); err != nil {
-		panic(err)
+		return err
 	}
+
+	return nil
 }

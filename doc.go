@@ -1,18 +1,14 @@
 /*
 Call a golang web application from node-webkit to get a native looking application.
 
-Dependencies
-
-Download node-webkit from https://github.com/rogerwang/node-webkit/#downloads.
-
 
 Instructions
 
 
 Go get golang-nw:
 
-    go get github.com/lonnc/golang-nw/cmd/golang-nw-build
-	
+    go get github.com/lonnc/golang-nw/cmd/golang-nw-pkg
+
 Create an app:
 
 See https://github.com/lonnc/golang-nw/blob/master/cmd/example/main.go
@@ -54,8 +50,8 @@ Build your app:
 
 Wrap it in node-webkit:
 
-    .\bin\golang-nw-build.exe -app=.\bin\example.exe -name="My Application" -out="myapp.nw"
-    
+    .\bin\golang-nw-pkg.exe -app=.\bin\example.exe -name="My Application" -out="myapp.exe"
+
 
 Finally execute node-webkit with the myapp.nw generated above as a parameter:
 
@@ -65,6 +61,6 @@ Finally execute node-webkit with the myapp.nw generated above as a parameter:
 You will probably want to create your own build script so you can control toolbar visibility,
 window dimensions etc.
 See http://godoc.org/github.com/lonnc/golang-nw/build and
-https://github.com/lonnc/golang-nw/blob/master/cmd/golang-nw-build/build.go
+https://github.com/lonnc/golang-nw/blob/master/cmd/golang-nw-pkg/pkg.go
 */
 package nw
