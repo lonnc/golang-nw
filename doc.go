@@ -31,7 +31,7 @@ See https://github.com/lonnc/golang-nw/blob/master/cmd/example/main.go
 			panic(err)
 		}
 
-		// Pick a random localhost port, start listening for http requests
+		// Pick a random localhost port, start listening for http requests using default handler
 		// and send a message back to node-webkit to redirect
 		if err := nodeWebkit.ListenAndServe(nil); err != nil {
 			panic(err)
@@ -50,17 +50,25 @@ Build your app:
 
 Wrap it in node-webkit:
 
-    .\bin\golang-nw-pkg.exe -app=.\bin\example.exe -name="My Application" -out="myapp.exe"
+    .\bin\golang-nw-pkg.exe -app=.\bin\example.exe -name="My Application" -bin="myapp.exe"
 
 
-Finally execute node-webkit with the myapp.nw generated above as a parameter:
+You are now good to go:
 
-    nw.exe myapp.nw
-
+    .\myapp.exe
 
 You will probably want to create your own build script so you can control toolbar visibility,
 window dimensions etc.
 See http://godoc.org/github.com/lonnc/golang-nw/build and
 https://github.com/lonnc/golang-nw/blob/master/cmd/golang-nw-pkg/pkg.go
+
+
+Bugs
+
+Reports of Linux failing with an "EACCES" error. This is probably a sandbox related error - solutions welcome.
+
+Work around is to use instructions from 
+https://github.com/lonnc/golang-nw/blob/7e2d41d6a1b41bcd8a1ca846531de9d84cce2ae0/doc.go
+
 */
 package nw

@@ -20,28 +20,20 @@ type Pkg struct {
 	Dependencies []string
 }
 
-const version = "v0.7.0"
-
-var (
-	Win32   = New(version, "windows", "386")
-	Linux32 = New(version, "linux", "386")
-	Linux64 = New(version, "linux", "amd64")
-)
-
-func New(version string, goos string, goarch string) Pkg {
-	pkgOs, ok := pkgOss[goos]
+func New(version string, nwOs string, nwArch string) Pkg {
+	pkgOs, ok := pkgOss[nwOs]
 	if !ok {
-		panic(fmt.Errorf("Unsupported goos %s", goos))
+		panic(fmt.Errorf("Unsupported os %q", nwOs))
 	}
 
 	var arch string
-	switch goarch {
+	switch nwArch {
 	case "386":
 		arch = "ia32"
 	case "amd64":
 		arch = "x64"
 	default:
-		panic(fmt.Errorf("Unsupported goarch %s", goarch))
+		panic(fmt.Errorf("Unsupported arch %q", nwArch))
 	}
 
 	url := fmt.Sprintf("https://s3.amazonaws.com/node-webkit/%s/node-webkit-%s-%s-%s%s", version, version, pkgOs.os, arch, pkgOs.ext)
@@ -146,7 +138,7 @@ func (p Pkg) copyBin(bin *zip.File, nw io.Reader, binName string, destDir string
 	defer r.Close()
 
 	filename := filepath.Join(destDir, binName)
-	w, err := os.Create(filename)
+	w, err := os.OpenFile(filename, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
 	if err != nil {
 		return err
 	}
@@ -242,22 +234,25 @@ func isExists(path string) (bool, error) {
 
 // Check whether this is a .zip and return if not create a zip file and return that
 func ensureZip(filename string) (string, error) {
-	if !strings.HasSuffix(filename, ".zip") {
-		if strings.HasSuffix(filename, ".tar.gz") {
-			filenameZip := filename[:len(filename)-7] + ".zip"
-			if exists, err := isExists(filenameZip); err != nil {
-				return filenameZip, err
-			} else if !exists {
+	if strings.HasSuffix(filename, ".zip") {
+		return filename, nil
+	}
+
+	if strings.HasSuffix(filename, ".tar.gz") {
+		filenameZip := filename[:len(filename)-len(".tar.gz")] + ".zip"
+		if exists, err := isExists(filenameZip); err != nil {
+			return "", err
+		} else {
+			if !exists {
 				if err := toZip(filename, filenameZip); err != nil {
-					return filenameZip, err
+					return "", err
 				}
 			}
-		} else {
-			return "", fmt.Errorf("Do not know how to get a zip archive from %s", filename)
+			return filenameZip, err
 		}
 	}
 
-	return filename, nil
+	return "", fmt.Errorf("Do not know how to create a zip archive from %s", filename)
 }
 
 // convert a .tar.gz into a .zip

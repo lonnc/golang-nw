@@ -62,7 +62,9 @@ func (p Package) CreateNW(zw *zip.Writer, templates Templates, myapp io.Reader) 
 		}
 	}
 
-	if w, err := zw.Create(p.Bin); err != nil {
+	binHeader := zip.FileHeader{Name: p.Bin}
+	binHeader.SetMode(0755) // Make it executable
+	if w, err := zw.CreateHeader(&binHeader); err != nil {
 		return err
 	} else {
 		if _, err := io.Copy(w, myapp); err != nil {

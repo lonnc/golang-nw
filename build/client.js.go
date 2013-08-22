@@ -45,7 +45,7 @@ exports.createClient = function() {
 	
 function startClient(channel, nodeWebkitAddr) {
     var path = require('path');
-    var exe = path.join(path.dirname(process.cwd), '{{ .Bin }}');
+    var exe = '.'+path.sep+'{{ .Bin }}';
     console.log('Using client: ' + exe);
 
     // Now start the client process

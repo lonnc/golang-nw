@@ -17,7 +17,7 @@ func main() {
 		panic(err)
 	}
 
-	// Pick a random localhost port, start listening for http requests
+	// Pick a random localhost port, start listening for http requests using default handler
 	// and send a message back to node-webkit to redirect
 	if err := nodeWebkit.ListenAndServe(nil); err != nil {
 		panic(err)

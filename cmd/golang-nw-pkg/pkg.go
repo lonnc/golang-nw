@@ -11,40 +11,56 @@ import (
 )
 
 var (
-	app      = "myapp.exe"
-	name     = "My Application"
-	bin      = "myapp.exe"
-	binDir   = "."
-	cacheDir = "."
+	app       = "myapp.exe"
+	name      = "My Application"
+	bin       = "myapp.exe"
+	binDir    = "."
+	cacheDir  = "."
+	nwVersion = "v0.7.1"
+	nwOs      = "windows"
+	nwArch    = "386"
 )
 
 func main() {
-	flag.StringVar(&app, "app", app, "Application to be wrapped by node-webkit.")
+	flag.StringVar(&app, "app", app, "Web application to be wrapped by node-webkit.")
 	flag.StringVar(&name, "name", name, "Application name.")
 	flag.StringVar(&bin, "bin", bin, "Destination file for combined application and node-webkit .nw file (will be placed in binDir directory).")
 	flag.StringVar(&binDir, "binDir", binDir, "Destination directory for bin and dependencies.")
 	flag.StringVar(&cacheDir, "cacheDir", cacheDir, "Directory to cache node-webkit download.")
+	flag.StringVar(&nwVersion, "version", nwVersion, "node-webkit version.")
+	flag.StringVar(&nwOs, "os", nwOs, "Target os [linux|windows].")
+	flag.StringVar(&nwArch, "arch", nwArch, "Target arch [386|amd64].")
 	flag.Parse()
 
-	p := pkg.Win32
+	p := pkg.New(nwVersion, nwOs, nwArch)
+
+	if filepath.Base(bin) != bin {
+		panic("bin %q includes a path")
+	}
 
 	nw := filepath.Join(cacheDir, bin+".nw")
 	fmt.Printf("Building:\t %s\n", nw)
-	// Ensure cache directory exists
-	if err := os.MkdirAll(cacheDir, 0755); err != nil {
-		panic(err)
-	}
 	if err := nwBuild(nw); err != nil {
 		panic(err)
 	}
 
 	fmt.Printf("Downloading:\t %s\n", p.Url)
+	// Ensure cache directory exists
+	if err := os.MkdirAll(cacheDir, 0755); err != nil {
+		panic(err)
+	}
 	nodeWebkitPath, err := nwDownload(p)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Printf("Packaging:\t %s\n", filepath.Join(binDir, bin))
+	out := filepath.Join(binDir, bin)
+	fmt.Printf("Packaging:\t %s\n", out)
+	// Ensure bin directory exists
+	if err := os.MkdirAll(binDir, 0755); err != nil {
+		panic(err)
+	}
+
 	if err := nwPkg(p, nodeWebkitPath, nw); err != nil {
 		panic(err)
 	}
