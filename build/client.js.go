@@ -55,6 +55,10 @@ function startClient(channel, nodeWebkitAddr) {
 	env['{{ .EnvVar }}'] = nodeWebkitAddr;
     var p = childProcess.spawn(exe, [], {env: env});
 
+    p.stdout.on('data', function(data) {
+        console.log(data.toString());
+    });
+	
     p.stderr.on('data', function(data) {
         console.error(data.toString());
     });
