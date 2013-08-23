@@ -8,6 +8,7 @@ import (
 	"github.com/lonnc/golang-nw/pkg"
 	"os"
 	"path/filepath"
+	"runtime"
 )
 
 var (
@@ -17,8 +18,9 @@ var (
 	binDir    = "."
 	cacheDir  = "."
 	nwVersion = "v0.7.1"
-	nwOs      = "windows"
-	nwArch    = "386"
+	nwOs      = runtime.GOOS
+	nwArch    = runtime.GOARCH
+	toolbar   = true
 )
 
 func main() {
@@ -30,6 +32,7 @@ func main() {
 	flag.StringVar(&nwVersion, "version", nwVersion, "node-webkit version.")
 	flag.StringVar(&nwOs, "os", nwOs, "Target os [linux|windows].")
 	flag.StringVar(&nwArch, "arch", nwArch, "Target arch [386|amd64].")
+	flag.BoolVar(&toolbar, "toolbar", toolbar, "Enable toolbar.")
 	flag.Parse()
 
 	p := pkg.New(nwVersion, nwOs, nwArch)
@@ -83,7 +86,7 @@ func nwBuild(nw string) error {
 	defer r.Close()
 
 	bin := filepath.Base(app)
-	p := build.Package{Name: name, Bin: bin, Window: build.Window{Title: name}}
+	p := build.Package{Name: name, Bin: bin, Window: build.Window{Title: name, Toolbar: toolbar}}
 
 	if err := p.CreateNW(zw, build.DefaultTemplates, r); err != nil {
 		return err

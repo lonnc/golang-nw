@@ -18,7 +18,7 @@ type Package struct {
 
 type Window struct {
 	Title    string `json:"title,omitempty"`
-	Toolbar  bool   `json:"toolbar,omitempty"`
+	Toolbar  bool   `json:"toolbar"`
 	Show     bool   `json:"show,omitempty"`
 	Position string `json:"position,omitempty"`
 	Width    int    `json:"width,omitempty"`

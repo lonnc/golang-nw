@@ -50,15 +50,14 @@ Build your app:
 
 Wrap it in node-webkit:
 
-    .\bin\golang-nw-pkg.exe -app=.\bin\example.exe -name="My Application" -bin="myapp.exe"
+    .\bin\golang-nw-pkg.exe -app=.\bin\example.exe -name="My Application" -bin="myapp.exe" -toolbar=false
 
 
 You are now good to go:
 
     .\myapp.exe
 
-You will probably want to create your own build script so you can control toolbar visibility,
-window dimensions etc.
+You may want to create your own build script so you can control window dimensions etc.
 See http://godoc.org/github.com/lonnc/golang-nw/build and
 https://github.com/lonnc/golang-nw/blob/master/cmd/golang-nw-pkg/pkg.go
 
