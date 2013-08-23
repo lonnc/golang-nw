@@ -3,7 +3,7 @@ package build
 const client = `
 "use strict";
 
-exports.createClient = function() {
+exports.createClient = function(args) {
     var events = require('events');
     var channel = new events.EventEmitter();
 	var http = require('http');
@@ -36,14 +36,15 @@ exports.createClient = function() {
     });
 
     server.listen(0, '127.0.0.1', 1, function() {
-	    console.log('Listening for golang-nw on http://127.0.0.1:'+server.address().port);
-		startClient(channel, 'http://127.0.0.1:'+server.address().port);
-	});
+        var nodeWebkitAddr = 'http://127.0.0.1:'+server.address().port;
+        console.log('Listening for golang-nw on '+nodeWebkitAddr);
+        startClient(channel, nodeWebkitAddr, args);
+    });
 	
 	return channel;
 };
 	
-function startClient(channel, nodeWebkitAddr) {
+function startClient(channel, nodeWebkitAddr, args) {
     var path = require('path');
     var exe = '.'+path.sep+'{{ .Bin }}';
     console.log('Using client: ' + exe);
@@ -53,7 +54,7 @@ function startClient(channel, nodeWebkitAddr) {
 
 	var env = process.env;
 	env['{{ .EnvVar }}'] = nodeWebkitAddr;
-    var p = childProcess.spawn(exe, [], {env: env});
+    var p = childProcess.spawn(exe, args, {env: env});
 
     p.stdout.on('data', function(data) {
         console.log(data.toString());

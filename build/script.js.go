@@ -24,7 +24,7 @@ win.on('loaded', function() {
         state.appendChild(document.createTextNode(s + '\n'));
     };
 
-    var clientProcess = client.createClient();
+    var clientProcess = client.createClient(gui.App.argv);
     clientProcess.
     on('error', function(err) {
         msg('Error: ' + err);
