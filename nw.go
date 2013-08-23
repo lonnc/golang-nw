@@ -9,14 +9,16 @@ import (
 	"strings"
 )
 
-var ErrMissingEnvVariable = errors.New("missing environment variable 'GOLANG-NW'")
+const EnvVar = "GOLANG-NW"
+
+var ErrMissingEnvVariable = errors.New("missing environment variable '" + EnvVar + "'")
 
 type NodeWebkit struct {
 	Url string // URL to issue callback command to
 }
 
 func New() (NodeWebkit, error) {
-	url := os.Getenv("GOLANG-NW")
+	url := os.Getenv(EnvVar)
 	if url == "" {
 		return NodeWebkit{}, ErrMissingEnvVariable
 	}

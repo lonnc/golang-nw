@@ -35,7 +35,7 @@ func main() {
 	p := pkg.New(nwVersion, nwOs, nwArch)
 
 	if filepath.Base(bin) != bin {
-		panic("bin %q includes a path")
+		panic(fmt.Errorf("bin %q includes a path", bin))
 	}
 
 	nw := filepath.Join(cacheDir, bin+".nw")

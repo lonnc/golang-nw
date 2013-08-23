@@ -3,15 +3,17 @@ package build
 import (
 	"archive/zip"
 	"encoding/json"
+	"github.com/lonnc/golang-nw"
 	"io"
 	"text/template"
 )
 
 type Package struct {
 	Name   string `json:"name"`
-	Bin    string `json:"-"`
 	Main   string `json:"main"`
 	Window Window `json:"window"`
+	Bin    string `json:"-"`
+	EnvVar string `json:"-"`
 }
 
 type Window struct {
@@ -35,6 +37,7 @@ var DefaultTemplates = Templates{IndexHtml: index, ClientJs: client, ScriptJs: s
 func (p Package) CreateNW(zw *zip.Writer, templates Templates, myapp io.Reader) error {
 	// Add in a couple of package defaults
 	p.Main = "index.html"
+	p.EnvVar = nw.EnvVar
 
 	if w, err := zw.Create("package.json"); err != nil {
 		return err

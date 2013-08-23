@@ -52,7 +52,7 @@ function startClient(channel, nodeWebkitAddr) {
     var childProcess = require('child_process');
 
 	var env = process.env;
-	env['GOLANG-NW'] = nodeWebkitAddr;
+	env['{{ .EnvVar }}'] = nodeWebkitAddr;
     var p = childProcess.spawn(exe, [], {env: env});
 
     p.stderr.on('data', function(data) {

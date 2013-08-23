@@ -67,7 +67,7 @@ Bugs
 
 Reports of Linux failing with an "EACCES" error. This is probably a sandbox related error - solutions welcome.
 
-Work around is to use instructions from 
+Work around is to use instructions from
 https://github.com/lonnc/golang-nw/blob/7e2d41d6a1b41bcd8a1ca846531de9d84cce2ae0/doc.go
 
 */
