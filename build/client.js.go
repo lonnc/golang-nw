@@ -13,17 +13,17 @@ exports.createClient = function(args) {
         response.end('');
 		return;
 	  }
-		
+
 	  var body = '';
 	  request.on('data', function(chunk) { body += chunk.toString(); });
 	  request.on('end', function() {
 		switch (request.url) {
-		case '/redirect': 
+		case '/redirect':
 		  channel.emit('redirect', body);
 		  response.writeHead(204);
 		  response.end('');
 		  break;
-		case '/error': 
+		case '/error':
 		  channel.emit('error', body);
 		  response.writeHead(204);
 		  response.end('');
@@ -40,14 +40,18 @@ exports.createClient = function(args) {
         console.log('Listening for golang-nw on '+nodeWebkitAddr);
         startClient(channel, nodeWebkitAddr, args);
     });
-	
+
 	return channel;
 };
-	
+
 function startClient(channel, nodeWebkitAddr, args) {
     var path = require('path');
     var exe = '.'+path.sep+'{{ .Bin }}';
     console.log('Using client: ' + exe);
+
+    // Make the exe executable
+    var fs = require('fs');
+    fs.chmodSync(exe, '755');
 
     // Now start the client process
     var childProcess = require('child_process');
@@ -59,7 +63,7 @@ function startClient(channel, nodeWebkitAddr, args) {
     p.stdout.on('data', function(data) {
         console.log(data.toString());
     });
-	
+
     p.stderr.on('data', function(data) {
         console.error(data.toString());
     });
