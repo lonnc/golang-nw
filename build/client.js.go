@@ -48,7 +48,7 @@ function logMessage(data, logger) {
     var lines = data.toString().split('\n');
     for (var i = 0; i < lines.length; i++) {
         if (lines[i]) {
-            logger(lines[i]);
+            logger.call(console, lines[i]);
         }
     }
 }
