@@ -43,6 +43,15 @@ exports.createClient = function(args) {
 	
 	return channel;
 };
+
+func logMessage(data, logger) {
+    var lines = data.toString().split('\n');
+    for (var i = 0; i < lines.length; i++) {
+        if (lines[i]) {
+            logger(lines[i]);
+        }
+    }
+}
 	
 function startClient(channel, nodeWebkitAddr, args) {
     var path = require('path');
@@ -57,11 +66,11 @@ function startClient(channel, nodeWebkitAddr, args) {
     var p = childProcess.spawn(exe, args, {env: env});
 
     p.stdout.on('data', function(data) {
-        console.log(data.toString());
+        logMessage(data, console.log);
     });
 	
     p.stderr.on('data', function(data) {
-        console.error(data.toString());
+        logMessage(data, console.error);
     });
 
     p.on('error', function(err) {
