@@ -44,7 +44,7 @@ exports.createClient = function(args) {
 	return channel;
 };
 
-func logMessage(data, logger) {
+function logMessage(data, logger) {
     var lines = data.toString().split('\n');
     for (var i = 0; i < lines.length; i++) {
         if (lines[i]) {
