@@ -41,7 +41,7 @@ func main() {
 		panic(fmt.Errorf("bin %q includes a path", bin))
 	}
 
-	nw := filepath.Join(cacheDir, bin+".nw")
+	nw := filepath.Join(binDir, bin+".nw")
 	fmt.Printf("Building:\t %s\n", nw)
 	if err := nwBuild(nw); err != nil {
 		panic(err)
