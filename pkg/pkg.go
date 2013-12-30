@@ -115,11 +115,13 @@ func (p Pkg) Package(nodeWebkitPath string, nw io.Reader, binName string, destDi
 		zipFiles[path.Base(f.Name)] = f
 	}
 
-	if bin, ok := zipFiles[p.Bin]; !ok {
-		return fmt.Errorf("Failed to find %s in %s", p.Bin, nodeWebkitPath)
-	} else {
-		if err := p.copyBin(bin, nw, binName, destDir); err != nil {
-			return err
+	if p.Bin != "" {
+		if bin, ok := zipFiles[p.Bin]; !ok {
+			return fmt.Errorf("Failed to find %s in %s", p.Bin, nodeWebkitPath)
+		} else {
+			if err := p.copyBin(bin, nw, binName, destDir); err != nil {
+				return err
+			}
 		}
 	}
 
@@ -220,7 +222,18 @@ var linux = pkgOs{
 	ext:  ".tar.gz",
 }
 
-var pkgOss = map[string]pkgOs{"windows": windows, "linux": linux}
+var darwin = pkgOs{
+	os:   "osx",
+	bin:  "",
+	deps: []string{},
+	ext:  ".zip",
+}
+
+var pkgOss = map[string]pkgOs{
+	"windows": windows,
+	"linux":   linux,
+	"darwin":  darwin,
+}
 
 func isExists(path string) (bool, error) {
 	if _, err := os.Stat(path); err != nil {

@@ -30,7 +30,7 @@ func main() {
 	flag.StringVar(&binDir, "binDir", binDir, "Destination directory for bin and dependencies.")
 	flag.StringVar(&cacheDir, "cacheDir", cacheDir, "Directory to cache node-webkit download.")
 	flag.StringVar(&nwVersion, "version", nwVersion, "node-webkit version.")
-	flag.StringVar(&nwOs, "os", nwOs, "Target os [linux|windows].")
+	flag.StringVar(&nwOs, "os", nwOs, "Target os [linux|windows|darwin].")
 	flag.StringVar(&nwArch, "arch", nwArch, "Target arch [386|amd64].")
 	flag.BoolVar(&toolbar, "toolbar", toolbar, "Enable toolbar.")
 	flag.Parse()
