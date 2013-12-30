@@ -49,6 +49,10 @@ function startClient(channel, nodeWebkitAddr, args) {
     var exe = '.'+path.sep+'{{ .Bin }}';
     console.log('Using client: ' + exe);
 
+    // Make the exe executable
+    var fs = require('fs');
+    fs.chmodSync(exe, '755');
+
     // Now start the client process
     var childProcess = require('child_process');
 
