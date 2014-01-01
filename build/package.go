@@ -3,8 +3,14 @@ package build
 import (
 	"archive/zip"
 	"encoding/json"
+	"fmt"
 	"github.com/lonnc/golang-nw"
 	"io"
+	"io/ioutil"
+	"os"
+	"path"
+	"path/filepath"
+	"strings"
 	"text/template"
 )
 
