@@ -99,37 +99,32 @@ func (p Package) writeJsonTo(w io.Writer) (int64, error) {
 }
 
 // Copy any files from the includes directory
-func copyIncludes(zw *zip.Writer, includes string) (includeErr error) {
+func copyIncludes(zw *zip.Writer, includes string) error {
 	includes = path.Clean(includes)
 	if !strings.HasSuffix(includes, "/") {
 		includes += "/"
 	}
-	filepath.Walk(includes, func(path string, info os.FileInfo, err error) error {
+	return filepath.Walk(includes, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
-			includeErr = err
 			return err
 		}
 		if info.IsDir() {
 			return nil
 		}
 		if w, err := zw.Create(strings.TrimPrefix(path, includes)); err != nil {
-			includeErr = err
 			return err
 		} else {
 			b, err := ioutil.ReadFile(path)
 			if err != nil {
-				includeErr = err
 				return err
 			} else {
 				_, err := w.Write(b)
 				if err != nil {
-					includeErr = err
 					return err
 				}
 			}
 		}
 		return nil
 	})
-	return
 }
 
