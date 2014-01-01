@@ -21,6 +21,7 @@ var (
 	nwOs      = runtime.GOOS
 	nwArch    = runtime.GOARCH
 	toolbar   = true
+	includesDir = ""
 )
 
 func main() {
@@ -33,6 +34,7 @@ func main() {
 	flag.StringVar(&nwOs, "os", nwOs, "Target os [linux|windows|darwin].")
 	flag.StringVar(&nwArch, "arch", nwArch, "Target arch [386|amd64].")
 	flag.BoolVar(&toolbar, "toolbar", toolbar, "Enable toolbar.")
+	flag.StringVar(&includesDir, "includes", includesDir, "Directory containing additional files to bundle with the .nw file")
 	flag.Parse()
 
 	p := pkg.New(nwVersion, nwOs, nwArch)
@@ -88,7 +90,7 @@ func nwBuild(nw string) error {
 	bin := filepath.Base(app)
 	p := build.Package{Name: name, Bin: bin, Window: build.Window{Title: name, Toolbar: toolbar}}
 
-	if err := p.CreateNW(zw, build.DefaultTemplates, r); err != nil {
+	if err := p.CreateNW(zw, build.DefaultTemplates, r, includesDir); err != nil {
 		return err
 	}
 
