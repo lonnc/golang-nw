@@ -3,7 +3,6 @@ package build
 import (
 	"archive/zip"
 	"encoding/json"
-	"fmt"
 	"github.com/lonnc/golang-nw"
 	"io"
 	"io/ioutil"
@@ -113,10 +112,7 @@ func copyIncludes(zw *zip.Writer, includes string) (includeErr error) {
 		if info.IsDir() {
 			return nil
 		}
-		p := strings.TrimPrefix(path, includes)
-		fmt.Printf("Path: %s\nPrefix: %s\n", path, includes)
-		fmt.Printf("Adding %s to the zip file\n", p)
-		if w, err := zw.Create(p); err != nil {
+		if w, err := zw.Create(strings.TrimPrefix(path, includes)); err != nil {
 			includeErr = err
 			return err
 		} else {
