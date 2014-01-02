@@ -34,7 +34,7 @@ func main() {
 	flag.StringVar(&nwOs, "os", nwOs, "Target os [linux|windows|darwin].")
 	flag.StringVar(&nwArch, "arch", nwArch, "Target arch [386|amd64].")
 	flag.BoolVar(&toolbar, "toolbar", toolbar, "Enable toolbar.")
-	flag.StringVar(&includesDir, "includes", includesDir, "Directory containing additional files to bundle with the .nw file")
+	flag.StringVar(&includesDir, "includesDir", includesDir, "Directory containing additional files to bundle with the .nw file")
 	flag.Parse()
 
 	p := pkg.New(nwVersion, nwOs, nwArch)
