@@ -75,7 +75,7 @@ func (p Package) CreateNW(zw *zip.Writer, templates Templates, myapp io.Reader, 
 			return err
 		}
 	}
-    
+
 	binHeader := zip.FileHeader{Name: p.Bin}
 	binHeader.SetMode(0755) // Make it executable
 	if w, err := zw.CreateHeader(&binHeader); err != nil {
@@ -127,4 +127,3 @@ func copyIncludes(zw *zip.Writer, includes string) error {
 		return nil
 	})
 }
-

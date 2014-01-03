@@ -12,15 +12,15 @@ import (
 )
 
 var (
-	app       = "myapp.exe"
-	name      = "My Application"
-	bin       = "myapp.exe"
-	binDir    = "."
-	cacheDir  = "."
-	nwVersion = "v0.7.1"
-	nwOs      = runtime.GOOS
-	nwArch    = runtime.GOARCH
-	toolbar   = true
+	app         = "myapp.exe"
+	name        = "My Application"
+	bin         = "myapp.exe"
+	binDir      = "."
+	cacheDir    = "."
+	nwVersion   = "v0.7.1"
+	nwOs        = runtime.GOOS
+	nwArch      = runtime.GOARCH
+	toolbar     = true
 	includesDir = ""
 )
 
