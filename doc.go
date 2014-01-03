@@ -52,6 +52,9 @@ Wrap it in node-webkit:
 
     .\bin\golang-nw-pkg.exe -app=.\bin\example.exe -name="My Application" -bin="myapp.exe" -toolbar=false
 
+    Building:        myapp.exe.nw
+    Downloading:     https://s3.amazonaws.com/node-webkit/v0.8.4/node-webkit-v0.8.4-win-ia32.zip
+    Packaging:       myapp.exe
 
 You are now good to go:
 
