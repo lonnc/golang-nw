@@ -61,13 +61,5 @@ You may want to create your own build script so you can control window dimension
 See http://godoc.org/github.com/lonnc/golang-nw/build and
 https://github.com/lonnc/golang-nw/blob/master/cmd/golang-nw-pkg/pkg.go
 
-
-Bugs
-
-Reports of Linux failing with an "EACCES" error. This is probably a sandbox related error - solutions welcome.
-
-Work around is to use instructions from
-https://github.com/lonnc/golang-nw/blob/7e2d41d6a1b41bcd8a1ca846531de9d84cce2ae0/doc.go
-
 */
 package nw
