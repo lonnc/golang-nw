@@ -79,6 +79,17 @@ Command line options:
       -toolbar=true: Enable toolbar.
       -version="v0.9.2": node-webkit version.
 
+Known issues:
+
+1) libudev.so.0 - On ubuntu >=13.10 (and similar) libudev.so.0 has been removed. 
+tl;dr:
+
+    $ ./bin/golang-nw-pkg -app=./bin/example -name="My Application" -bin="myapp" -toolbar=false
+    $ sed -i -e 's/udev\.so\.0/udev.so.1/g' myapp
+
+Node-webkit has various work arounds described at https://github.com/rogerwang/node-webkit/wiki/The-solution-of-lacking-libudev.so.0
+
+2) Download of node-webkit appears to stall - It's a ~43MB download and can take longer than expected (it could do with some feedback).
 
 */
 package nw
