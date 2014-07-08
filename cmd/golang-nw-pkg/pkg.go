@@ -22,6 +22,8 @@ var (
 	nwArch      = runtime.GOARCH
 	toolbar     = true
 	includesDir = ""
+	fullscreen  = false
+	frame       = true
 )
 
 func main() {
@@ -40,6 +42,8 @@ func main() {
 	flag.StringVar(&nwArch, "arch", nwArch, "Target arch [386|amd64].")
 	flag.BoolVar(&toolbar, "toolbar", toolbar, "Enable toolbar.")
 	flag.StringVar(&includesDir, "includesDir", includesDir, "Directory containing additional files to bundle with the .nw file")
+	flag.BoolVar(&fullscreen, "fullscreen", fullscreen, "Enable fullscreen mode.")
+	flag.BoolVar(&frame, "frame", frame, "Set to false to make window frameless.")
 	flag.Parse()
 
 	p := pkg.New(nwVersion, nwOs, nwArch)
@@ -93,7 +97,7 @@ func nwBuild(nw string) error {
 	defer r.Close()
 
 	bin := filepath.Base(app)
-	p := build.Package{Name: name, Bin: bin, Window: build.Window{Title: name, Toolbar: toolbar}}
+	p := build.Package{Name: name, Bin: bin, Window: build.Window{Title: name, Toolbar: toolbar, Fullscreen: fullscreen, Frame: frame}}
 
 	if err := p.CreateNW(zw, build.DefaultTemplates, r, includesDir); err != nil {
 		return err
