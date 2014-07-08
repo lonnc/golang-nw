@@ -64,5 +64,21 @@ You may want to create your own build script so you can control window dimension
 See http://godoc.org/github.com/lonnc/golang-nw/build and
 https://github.com/lonnc/golang-nw/blob/master/cmd/golang-nw-pkg/pkg.go
 
+Command line options:
+
+    $ ./bin/golang-nw-pkg -h
+    Usage of ./bin/golang-nw-pkg:
+      -app="myapp": Web application to be wrapped by node-webkit.
+      -arch="amd64": Target arch [386|amd64].
+      -bin="myapp": Destination file for combined application and node-webkit .nw file (will be placed in binDir directory).
+      -binDir=".": Destination directory for bin and dependencies.
+      -cacheDir=".": Directory to cache node-webkit download.
+      -includesDir="": Directory containing additional files to bundle with the .nw file
+      -name="My Application": Application name.
+      -os="linux": Target os [linux|windows|darwin].
+      -toolbar=true: Enable toolbar.
+      -version="v0.9.2": node-webkit version.
+
+
 */
 package nw
