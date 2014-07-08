@@ -12,9 +12,9 @@ import (
 )
 
 var (
-	app         = "myapp.exe"
+	app         = "myapp"
 	name        = "My Application"
-	bin         = "myapp.exe"
+	bin         = "myapp"
 	binDir      = "."
 	cacheDir    = "."
 	nwVersion   = "v0.9.2"
@@ -25,6 +25,11 @@ var (
 )
 
 func main() {
+	if runtime.GOOS == "windows" {
+		app = app + ".exe"
+		bin = bin + ".exe"
+	}
+
 	flag.StringVar(&app, "app", app, "Web application to be wrapped by node-webkit.")
 	flag.StringVar(&name, "name", name, "Application name.")
 	flag.StringVar(&bin, "bin", bin, "Destination file for combined application and node-webkit .nw file (will be placed in binDir directory).")
