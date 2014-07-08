@@ -111,6 +111,7 @@ func copyIncludes(zw *zip.Writer, includes string) error {
 		if info.IsDir() {
 			return nil
 		}
+		path = filepath.ToSlash(path)
 		if w, err := zw.Create(strings.TrimPrefix(path, includes)); err != nil {
 			return err
 		} else {
