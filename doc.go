@@ -73,6 +73,8 @@ Command line options:
       -bin="myapp": Destination file for combined application and node-webkit .nw file (will be placed in binDir directory).
       -binDir=".": Destination directory for bin and dependencies.
       -cacheDir=".": Directory to cache node-webkit download.
+      -frame=true: Set to false to make window frameless.
+      -fullscreen=false: Enable fullscreen mode.
       -includesDir="": Directory containing additional files to bundle with the .nw file
       -name="My Application": Application name.
       -os="linux": Target os [linux|windows|darwin].
@@ -81,7 +83,7 @@ Command line options:
 
 Known issues:
 
-1) libudev.so.0 - On ubuntu >=13.10 (and similar) libudev.so.0 has been removed. 
+1) libudev.so.0 - On ubuntu >=13.10 (and similar) libudev.so.0 has been removed.
 tl;dr:
 
     $ ./bin/golang-nw-pkg -app=./bin/example -name="My Application" -bin="myapp" -toolbar=false
