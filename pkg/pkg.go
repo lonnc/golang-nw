@@ -36,7 +36,7 @@ func New(version string, nwOs string, nwArch string) Pkg {
 		panic(fmt.Errorf("Unsupported arch %q", nwArch))
 	}
 
-	url := fmt.Sprintf("https://s3.amazonaws.com/node-webkit/%s/node-webkit-%s-%s-%s%s", version, version, pkgOs.os, arch, pkgOs.ext)
+	url := fmt.Sprintf("http://dl.node-webkit.org/%s/node-webkit-%s-%s-%s%s", version, version, pkgOs.os, arch, pkgOs.ext)
 
 	pkg := Pkg{
 		Url:          url,
