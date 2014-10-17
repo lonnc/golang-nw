@@ -17,7 +17,7 @@ var (
 	bin         = "myapp"
 	binDir      = "."
 	cacheDir    = "."
-	nwVersion   = "v0.9.2"
+	nwVersion   = "v0.10.5"
 	nwOs        = runtime.GOOS
 	nwArch      = runtime.GOARCH
 	toolbar     = true

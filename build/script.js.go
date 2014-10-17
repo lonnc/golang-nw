@@ -8,11 +8,11 @@ var win = gui.Window.get();
 
 win.on('loaded', function() {
     // Restore window location on startup.
-    if (localStorage.width && localStorage.height) {
-        win.resizeTo(parseInt(localStorage.width), parseInt(localStorage.height));
-        win.moveTo(parseInt(localStorage.x), parseInt(localStorage.y));
+    if (window.localStorage.width && window.localStorage.height) {
+        win.resizeTo(parseInt(window.localStorage.width), parseInt(window.localStorage.height));
+        win.moveTo(parseInt(window.localStorage.x), parseInt(window.localStorage.y));
     }
-	
+
     // Ensure we are visible
     win.show();
 
@@ -32,7 +32,7 @@ win.on('loaded', function() {
     on('redirect', function(url) {
         window.location.href = url;
     });
-    
+
     // And kill client when we close the window
     win.on('close', function() {
         clientProcess.kill();
@@ -41,10 +41,10 @@ win.on('loaded', function() {
 
 // Save size on close.
 win.on('close', function() {
-    localStorage.x = win.x;
-    localStorage.y = win.y;
-    localStorage.width = win.width;
-    localStorage.height = win.height;
+    window.localStorage.x = win.x;
+    window.localStorage.y = win.y;
+    window.localStorage.width = win.width;
+    window.localStorage.height = win.height;
     this.close(true);
 });
 `

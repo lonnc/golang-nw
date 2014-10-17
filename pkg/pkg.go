@@ -218,7 +218,7 @@ var windows = pkgOs{
 var linux = pkgOs{
 	os:   "linux",
 	bin:  "nw",
-	deps: []string{"libffmpegsumo.so", "nw.pak"},
+	deps: []string{"libffmpegsumo.so", "nw.pak", "icudtl.dat"},
 	ext:  ".tar.gz",
 }
 
