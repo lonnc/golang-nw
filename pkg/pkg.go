@@ -211,7 +211,7 @@ type pkgOs struct {
 var windows = pkgOs{
 	os:   "win",
 	bin:  "nw.exe",
-	deps: []string{"ffmpegsumo.dll", "icudt.dll", "libEGL.dll", "libGLESv2.dll", "nw.pak"},
+	deps: []string{"ffmpegsumo.dll" /*"icudt.dll"*/, "icudtl.dat", "libEGL.dll", "libGLESv2.dll", "nw.pak"},
 	ext:  ".zip",
 }
 
