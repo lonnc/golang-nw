@@ -12,12 +12,13 @@ import (
 )
 
 var (
-	app         = "myapp"
-	name        = "My Application"
-	bin         = "myapp"
-	binDir      = "."
-	cacheDir    = "."
-	nwVersion   = "v0.10.5"
+	app      = "myapp"
+	name     = "My Application"
+	bin      = "myapp"
+	binDir   = "."
+	cacheDir = "."
+	//nwVersion   = "v0.10.5"
+	nwVersion   = "v0.11.6"
 	nwOs        = runtime.GOOS
 	nwArch      = runtime.GOARCH
 	toolbar     = true
