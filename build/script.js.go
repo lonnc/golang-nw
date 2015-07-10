@@ -4,6 +4,7 @@ const script = `
 "use strict";
 
 var gui = require('nw.gui');
+var os = require('os');
 var win = gui.Window.get();
 
 win.on('loaded', function() {
@@ -47,4 +48,12 @@ win.on('close', function() {
     window.localStorage.height = win.height;
     this.close(true);
 });
+
+// Workaround for copy-paste working on Mac.
+if(os.platform() == "darwin") {
+     var nativeMenuBar = new gui.Menu({ type: "menubar" });
+     nativeMenuBar.createMacBuiltin("App Name");
+     win.menu = nativeMenuBar;
+}
+
 `
